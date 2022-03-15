@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "skipLibCheck": true,
+    "lib": [
+      "es6",
+      "dom",
+      "es2015.collection",
+      "es2015.iterable",
+      "es2016",
+      "es2017"
+    ],
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "importHelpers": true,
+    "typeRoots": [
+      "node_modules/@types",
+    ],
+    "baseUrl": "./",
+    "downlevelIteration": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}
