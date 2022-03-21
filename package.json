@@ -10,7 +10,7 @@
     "start": "rollup -c -w && yarn run prettier-watch",
     "prepare": "husky install",
     "prettier-watch": "onchange 'src/**/*' -- prettier --write {{changed}}",
-    "lint": "eslint src/**/* --ext .ts,.tsx --fix",
+    "lint": "eslint src/**/* --ext .ts,.tsx --quiet --fix",
     "test": "yarn run lint && jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -99,5 +99,7 @@
       "git add"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "0.26.0"
+  }
 }
