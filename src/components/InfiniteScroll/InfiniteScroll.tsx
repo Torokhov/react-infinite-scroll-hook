@@ -1,33 +1,48 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 
-export const InfiniteScroll = () => {
-  const [pageNum, setPageNum] = useState<number>(1);
+export interface Props<TItem> {
+  pageStart?: number;
+  loadMode: (pageNumber: number) => Promise<TItem[]>;
+  hasMore?: boolean;
+  treshold?: number;
+  loaderComponent?: React.ReactNode;
+  errorComponent?: React.ReactNode;
+  renderItem?: (item: TItem) => React.ReactNode;
+}
+
+export function InfiniteScroll<TItem>({
+  pageStart = 0,
+  hasMore = true,
+  loadMode,
+  treshold = 0,
+  renderItem = (item: TItem) => <div>{String(item)}</div>,
+  loaderComponent = <div>Загрузка...</div>,
+  errorComponent = <div>Произошла ошибка</div>,
+}: Props<TItem>) {
+  const [pageNum, setPageNum] = useState<number>(pageStart);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [list, setList] = useState<any>([]);
+  const [items, setItems] = useState<TItem[]>([]);
 
   useEffect(() => {
     const sendQuery = async () => {
-      try {
-        setLoading(true);
-        setError(false);
-        const res = await axios.get('https://jsonplaceholder.typicode.com/photos', {
-          params: {
-            albumId: pageNum,
-          },
-        });
-        setList([...list, ...res.data]);
-        setLoading(false);
-      } catch {
-        setError(true);
+      if (hasMore) {
+        try {
+          setLoading(true);
+          setError(false);
+          const newItems = await loadMode(pageNum);
+          setItems([...items, ...newItems]);
+          setLoading(false);
+        } catch {
+          setError(true);
+        }
       }
     };
     sendQuery();
-  }, [pageNum]);
+  }, [pageNum, loadMode, hasMore]);
 
   const observer = useRef<IntersectionObserver>();
-  const lastBookElementRef = useCallback(
+  const observedElementRef = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
@@ -41,20 +56,26 @@ export const InfiniteScroll = () => {
     [loading, pageNum]
   );
 
+  const renderItems = () => {
+    const observedElementIndex =
+      items.length <= treshold ? items.length - 1 : items.length - 1 - treshold;
+
+    return (
+      <>
+        {items.map((item: TItem, i: number) => (
+          <div key={i} ref={i === observedElementIndex ? observedElementRef : null}>
+            {renderItem(item)}
+          </div>
+        ))}
+      </>
+    );
+  };
+
   return (
     <div>
-      <h1>Infinite Scroll</h1>
-      <h2>with useRef</h2>
-      {list.map((item: any, i: number) => {
-        const isLastElement = list.length === i + 1;
-        return (
-          <div key={item.id} ref={isLastElement ? lastBookElementRef : null}>
-            <img src={item.thumbnailUrl} />
-          </div>
-        );
-      })}
-      <div>{loading && 'Loading...'}</div>
-      <div>{error && 'Error...'}</div>
+      {renderItems()}
+      {loading && loaderComponent}
+      {error && errorComponent}
     </div>
   );
-};
+}
