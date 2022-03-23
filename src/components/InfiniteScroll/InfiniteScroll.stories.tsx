@@ -1,6 +1,7 @@
 import React from 'react';
 import { InfiniteScroll } from './InfiniteScroll';
 import axios from 'axios';
+import { boolean, number } from '@storybook/addon-knobs';
 
 export default {
   title: 'InfiniteScroll',
@@ -15,7 +16,7 @@ interface Picture {
   thumbnailUrl: 'https://via.placeholder.com/150/8e973b';
 }
 
-export const InfiniteScrollComponent = () => {
+export const Default = () => {
   const loadMore = async (pageNum: number) => {
     const result = await axios.get('https://jsonplaceholder.typicode.com/photos', {
       params: {
@@ -37,8 +38,9 @@ export const InfiniteScrollComponent = () => {
       <InfiniteScroll<Picture>
         loadMode={loadMore}
         renderItem={renderItem}
-        pageStart={1}
-        treshold={5}
+        pageStart={number('pageStart', 1)}
+        treshold={number('treshold', 5)}
+        hasMore={boolean('hasMore', true)}
       />
     </div>
   );
