@@ -1,7 +1,7 @@
-#React-infinite-scroll-hook
+# React-infinite-scroll-hook
 React hook and component for get data on scroll event
 
-##Hook
+## Hook
 
 ```typescript jsx
 export function useInfiniteScroll<TItem>(
@@ -16,14 +16,14 @@ export function useInfiniteScroll<TItem>(
 };
 ```
 
-####Parameters
+#### Parameters
 `pageStart` - index of first loaded page
 
 `hasMore` - defines the need for subsequent page loading
 
 `loadMore` - page loading function
 
-####Return values
+#### Return values
 `items` - list of loaded items
 
 `error` - defines if an error was received while loading
@@ -31,7 +31,7 @@ export function useInfiniteScroll<TItem>(
 `loading` - defines the loading state
 
 `observedElementRef` - ref on scrollable element
-####Example usage
+#### Example usage
 
 ```typescript jsx
 export function InfiniteScroll<TItem>({
@@ -74,7 +74,7 @@ export function InfiniteScroll<TItem>({
 }
 ```
 
-###Component
+### Component
 
 ```typescript jsx
 export function InfiniteScroll<TItem>({
@@ -88,7 +88,7 @@ export function InfiniteScroll<TItem>({
 }: InfiniteScrollProps<TItem>);
 ```
 
-####Props
+#### Props
 `pageStart` - index of first loaded page
 
 `hasMore` - defines the need for subsequent page loading
@@ -103,7 +103,7 @@ export function InfiniteScroll<TItem>({
 
 `errorComponent` - error state component
 
-####Example usage
+#### Example usage
 
 ```typescript jsx
 export const App = () => {
