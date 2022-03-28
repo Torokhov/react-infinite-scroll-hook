@@ -4,7 +4,12 @@ export function useInfiniteScroll<TItem>(
   pageStart: number,
   hasMore: boolean,
   loadMode: (pageNumber: number) => Promise<TItem[]>
-) {
+): {
+  items: TItem[];
+  error: boolean;
+  loading: boolean;
+  observedElementRef: (node: React.ReactNode) => void;
+} {
   const [pageNum, setPageNum] = useState<number>(pageStart);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

@@ -36,7 +36,7 @@ export const Default = () => {
   return (
     <div style={{ overflow: 'auto', height: '500px' }}>
       <InfiniteScroll<Picture>
-        loadMode={loadMore}
+        loadMore={loadMore}
         renderItem={renderItem}
         pageStart={number('pageStart', 1)}
         treshold={number('treshold', 5)}

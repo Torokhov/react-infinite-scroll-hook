@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/Torokhov/react-infinite-scroll-hook.git"
   },
-  "author": "",
+  "author": "oleg_torokhov",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Torokhov/react-infinite-scroll-hook/issues"

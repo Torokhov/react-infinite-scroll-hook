@@ -3,7 +3,7 @@ import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 export interface InfiniteScrollProps<TItem> {
   pageStart?: number;
-  loadMode: (pageNumber: number) => Promise<TItem[]>;
+  loadMore: (pageNumber: number) => Promise<TItem[]>;
   hasMore?: boolean;
   treshold?: number;
   loaderComponent?: React.ReactNode;
@@ -14,7 +14,7 @@ export interface InfiniteScrollProps<TItem> {
 export function InfiniteScroll<TItem>({
   pageStart = 0,
   hasMore = true,
-  loadMode,
+  loadMore,
   treshold = 0,
   renderItem = (item: TItem) => <div>{String(item)}</div>,
   loaderComponent = <div>Загрузка...</div>,
@@ -23,7 +23,7 @@ export function InfiniteScroll<TItem>({
   const { observedElementRef, loading, error, items } = useInfiniteScroll(
     pageStart,
     hasMore,
-    loadMode
+    loadMore
   );
 
   const renderItems = () => {
